@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV - Nguyễn Văn Phong</title>
+  <link rel="stylesheet" href="../styles/stylePhong.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta name="description" content="CV cá nhân của Nguyễn Văn Phong - Student Developer chuyên về Web và định hướng Mobile.">
+</head>
+
+<body>
+  <!-- Header Section -->
+  <header class="site-header">
+    <div class="header-overlay"></div> <!-- Lớp phủ cho ảnh nền -->
+    <div class="header-content"> 
+
+      <!-- Thẻ bao ngoài (dùng Flexbox để căn giữa avatar và icon container) -->
+      <!-- Thẻ này sẽ là container relative để icons position absolute theo -->
+      <!-- Class 'show-icons' sẽ được JS thêm/bỏ vào wrapper này khi click -->
+      <div class="avatar-flex-wrapper">
+        <div class="profile-pic" id="avatarProfilePic"> <!-- THÊM ID ĐỂ JS DỄ CHỌN -->
+          <img src="../assets/images/imgPhongPage/avata.png" alt="Ảnh cá nhân của Nguyễn Văn Phong">
+        </div>
+        <div class="social-icons-on-avatar" id="socialIconsOnAvatar">
+            <a href="https://github.com/githubofphong" target="_blank" class="social-icon" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://www.facebook.com/share/1Ahnv64JRq/?mibextid=qi2Omg" target="_blank" class="social-icon" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/phong.ng.mbl?igsh=YWpxcWE2cDM1Mmpz" target="_blank" class="social-icon" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <!-- <a href="#" target="_blank" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a> -->
+        </div>
+      </div>
+      <h1>Nguyễn Văn Phong</h1>
+      <p>Student Developer | Building Skills in Web & Mobile</p>
+    </div>
+  </header>
+
+   <!-- Container cho hiệu ứng khói/lửa (Phương án 2: JS tạo hạt) -->
+  <div class="background-effects">
+      <!-- Hạt sẽ được JS tạo ra và thêm vào đây -->
+  </div>
+  <nav class="site-nav">
+    <a href="#about">Thông tin</a>
+    <a href="#career">Mục tiêu</a>
+    <a href="#skills">Kỹ năng</a>
+    <a href="#hobbies">Sở thích</a>
+    <a href="#projects">Dự án</a>
+    <a href="#awards">Chứng chỉ</a>
+    <a href="#contact">Liên hệ</a>
+    <a href="../html/main.html">Quay lại</a>
+  </nav>
+
+  <main class="container">
+
+    <section id="about" class="section">
+      <h2><i class="fas fa-user-circle section-icon"></i> Thông tin cá nhân</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <p>Xin chào! <strong>Tôi là Nguyễn Văn Phong</strong>.</p>
+          <p>Quê quán: Chợ Gạo, Tiền Giang</p>
+          <p>Ngày sinh: 28/02/2005</p>
+          <p>Học vấn: <strong>University of Transport Ho Chi Minh City – UTH</strong> | expected:
+            <strong>2023-2027</strong>
+          </p>
+           <p>Là một sinh viên đam mê công nghệ, tôi đang xây dựng nền tảng về lập trình web front-end và tìm hiểu sâu về phát triển ứng dụng di động. Tôi luôn sẵn sàng học hỏi và đối mặt với các thử thách mới.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="career" class="section">
+      <h2><i class="fas fa-bullseye section-icon"></i> Mục tiêu nghề nghiệp</h2>
+
+      <p>Mục tiêu ngắn hạn của tôi là tìm kiếm cơ hội thực tập hoặc làm việc ở vị trí <strong>Intern Mobile
+          Developer</strong>
+        (hoặc <strong>Front-end Developer</strong> với lộ trình phát triển sang Mobile) tại một môi trường chuyên
+        nghiệp, nơi tôi có
+        thể học hỏi, áp dụng kiến thức nền tảng về lập trình, và trau dồi chuyên sâu các công nghệ phát triển ứng dụng
+        di động.</p>
+
+      <p>Trong dài hạn, tôi mong muốn trở thành một <strong>Mobile Developer chuyên nghiệp</strong>, có khả năng xây
+        dựng các ứng
+        dụng di động chất lượng cao, tối ưu hóa trải nghiệm người dùng trên đa nền tền tảng và đóng góp vào sự phát triển
+        của cộng đồng công nghệ di động.</p>
+
+    </section>
+
+    <section id="skills" class="section">
+      <h2><i class="fas fa-code section-icon"></i> Kỹ năng</h2>
+      <div class="skills-list">
+        <div class="skill-category">
+          <h3>Ngôn ngữ</h3>
+          <ul>
+            <li>Tiếng Việt</li>
+            <li>Tiếng Anh cơ bản</li>
+          </ul>
+        </div>
+        <div class="skill-category">
+          <h3>Ngôn ngữ lập trình</h3>
+          <ul>
+            <li>C/C++</li>
+            <li>Java</li>
+            <li>PHP</li>
+            <li>JavaScript</li>
+          </ul>
+        </div>
+        <div class="skill-category">
+          <h3>Database</h3>
+          <ul>
+            <li>MySQL, SQL Server</li>
+          </ul>
+        </div>
+        <div class="skill-category">
+          <h3>Frameworks & Libraries</h3>
+          <ul>
+            <li>Android SDK(Java)</li>
+            <li>Firebase</li>
+            <li>HTML5, CSS3 (Responsive Design, Flexbox/Grid)</li>
+          </ul>
+        </div>
+        <div class="skill-category">
+          <h3>Công cụ & Khác</h3>
+          <ul>
+            <li>Git, GitHub</li>
+            <li>Postman</li>
+            <li>Sublime Text, VS Code, Android Studio, IntelliJ, Eclipse</li>
+            <li>Thiết kế UI/UX cơ bản</li>
+            <li>TeamWork</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="hobbies" class="section">
+      <h2><i class="fas fa-heart section-icon"></i> Sở thích</h2>
+      <ul class="hobbies-list">
+        <!--Chia thành các div để quản lý hàng -->
+        <div class="hobbies-row hobbies-top-row">
+            <li>
+              <!-- BỌC ICON VÀ TIÊU ĐỀ TRONG DIV -->
+              <div class="hobby-header">
+                 <i class="fas fa-film"></i> <span>Xem phim</span>
+              </div>
+              <p class="hobby-description">Thích xem các thể loại phim khoa học viễn tưởng.</p>
+            </li>
+            <li>
+               <div class="hobby-header">
+                 <i class="fas fa-book-open"></i> <span>Đọc thông tin về công nghệ</span>
+               </div>
+              <p class="hobby-description">Cập nhật các xu hướng mới về AI, Mobile Development và Web Development.</p>
+            </li>
+            <li>
+               <div class="hobby-header">
+                 <i class="fas fa-music"></i> <span>Nghe nhạc</span>
+               </div>
+              <p class="hobby-description">Thư giãn với các bản nhạc Electronic, Synthwave và OST game/phim.</p>
+            </li>
+        </div>
+        <div class="hobbies-row hobbies-bottom-row">
+             <li class="hobby-game-item">
+               <div class="hobby-header">
+                 <i class="fas fa-gamepad"></i> <span>Chơi game</span>
+               </div>
+              <p class="hobby-description">Chơi vài tựa game như là: Minecraft, League of Legends, Ngọc rồng.</p>
+               <!-- Phần chi tiết và hình ảnh cho sở thích game -->
+               <div class="game-hobby-details">
+                   <p>
+                      Và đang cùng bạn bè <strong>Tìm hiểu một ít</strong> về cách xây dựng một Server game Ngọc Rồng private (dạng local).
+                       Tìm hiểu về database (MySQL/HediSQL) của game, logic server (Java), và vận hành bằng file batch (.bat).
+                   </p>
+                   <div class="hobby-image-wrapper">
+                       <img src="../assets/images/imgPhongPage/imgcmdnro.png" alt="Ảnh minh họa chơi game Ngọc Rồng"> 
+                       <img src="../assets/images/imgPhongPage/imgrungamenro.png" alt="Ảnh minh họa chơi game Ngọc Rồng">
+                       <img src="../assets/images/imgPhongPage/imgrungamenro2.png" alt="Ảnh minh họa chơi game Ngọc Rồng">
+                   </div>
+               </div>
+             </li>
+        </div>
+         <!-- Nếu có sở thích khác, em thêm vào -->
+      </ul>
+    </section>
+
+    <section id="projects" class="section">
+      <h2><i class="fas fa-laptop-code section-icon"></i> Dự án</h2>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <div class="project-image-wrapper">
+            <img src="../assets/images/imgPhongPage/homeappecom.png" alt="Ảnh demo giao diện ứng dụng TMDT Android" class="project-img responsive-img">
+          </div>
+          <h3>Ứng dụng TMDT (Android App)</h3>
+          <p>Mô tả: Dự án phát triển ứng dụng mua sắm trực tuyến trên nền tảng Android, bao gồm các chức năng xem danh mục sản phẩm, tìm kiếm, thêm vào giỏ hàng và tiến hành đặt hàng cơ bản.</p>
+          <p>Công nghệ: Java, PHP (Backend), MySQL & SQLite (Database), Android Studio, Postman. Giao tiếp API (dữ liệu JSON).</p>
+          <div class="project-links">
+            <a href="https://youtube.com/shorts/3GRn6ewO-5c" target="_blank" class="btn-link"><i
+                class="fas fa-external-link-alt"></i> Xem Demo</a>
+            <!-- <a href="[Link GitHub Dự án TMDT]" target="_blank" class="btn-link"><i class="fab fa-github"></i> Mã nguồn</a> -->
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-image-wrapper">
+            <img src="../assets/images/imgPhongPage/bookstore.png" alt="Ảnh demo giao diện ứng dụng bán sách Android" class="project-img responsive-img">
+          </div>
+          <h3>Ứng dụng bán sách (Android App)</h3>
+          <p>Mô tả: Dự án phát triển ứng dụng mua sắm sách trực tuyến trên nền tảng Android, cho phép người dùng xem danh mục sách, chi tiết sách và thêm sách vào giỏ hàng.</p>
+          <p>Công nghệ: Java, PHP (Backend), MySQL (Database), Android Studio, Postman. Giao tiếp API (dữ liệu JSON).</p>
+          <div class="project-links">
+            <a href="https://youtu.be/2Kn12rLNNFg" target="_blank" class="btn-link"><i
+                class="fas fa-external-link-alt"></i> Xem Demo</a>
+            <!-- <a href="[Link GitHub Dự án Bán sách]" target="_blank" class="btn-link"><i class="fab fa-github"></i> Mã nguồn</a> -->
+          </div>
+        </div>
+
+        <!-- thêm các dự án khác tại đây !!!!! -->
+
+      </div>
+    </section>
+
+    <section id="awards" class="section">
+      <h2><i class="fas fa-award section-icon"></i> Chứng chỉ - Giải thưởng</h2>
+      <div class="awards-list">
+        <ul>
+          <!-- <li>[Tên giải thưởng/chứng chỉ 1] - [Tổ chức cấp] - [Năm]</li> -->
+        </ul>
+        <p>Hiện tại chưa có chứng chỉ hoặc giải thưởng nổi bật.</p>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <h2><i class="fas fa-envelope section-icon"></i> Liên hệ</h2>
+      <div class="contact-info">
+        <p><i class="fas fa-phone"></i> Điện thoại: <a href="tel:+84387877284">0387877284</a></p>
+        <p><i class="fas fa-envelope"></i> Email: <a
+            href="mailto:phongnguyen02285@gmail.com">phongnguyen02285@gmail.com</a></p>
+        <p><i class="fas fa-map-marker-alt"></i> TP. Hồ Chí Minh</p>
+      </div>
+      <div class="social-links">
+        <a href="https://github.com/githubofphong" target="_blank" class="social-icon" title="GitHub"><i
+            class="fab fa-github"></i></a>
+        <a href="https://www.facebook.com/share/1Ahnv64JRq/?mibextid=qi2Omg" target="_blank" class="social-icon"
+          title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/phong.ng.mbl?igsh=YWpxcWE2cDM1Mmpz" target="_blank" class="social-icon"
+          title="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
+      <p class="note">Đừng ngần ngại liên hệ với tôi!</p>
+    </section>
+
+
+  </main>
+
+  <footer>
+    <p>© <span id="current-year"></span> Nguyễn Văn Phong. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+  </script>
+
+  <!-- Script cho hiệu ứng cuộn trang -->
+  <script>
+      document.addEventListener('DOMContentLoaded', () => {
+          const sections = document.querySelectorAll('main .section');
+
+          const observerOptions = {
+              root: null,
+              rootMargin: '0px',
+              threshold: 0.1 // Kích hoạt khi 10% section hiển thị
+          };
+
+          const observer = new IntersectionObserver((entries, observer) => {
+              entries.forEach(entry => {
+                  if (entry.isIntersecting) {
+                      entry.target.classList.add('is-visible');
+                      // observer.unobserve(entry.target); // Uncomment nếu chỉ muốn animation chạy 1 lần
+                  } else {
+                       // Tùy chọn: Xóa class 'is-visible' khi section ra khỏi viewport để animation chạy lại khi cuộn lên
+                       // entry.target.classList.remove('is-visible');
+                  }
+              });
+          }, observerOptions);
+
+          sections.forEach(section => {
+              observer.observe(section);
+          });
+      });
+  </script>
+
+  <!-- Link script JS cho hiệu ứng hạt và click avatar -->
+   <script src="../js/JSPhong.js"></script>
+
+</body>
+
+</html>

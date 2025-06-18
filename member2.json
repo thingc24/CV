@@ -1,0 +1,12 @@
+{
+    "name": "NgocThi",
+    "nickname": "Gamer háo thắng",
+    "gif": "../assets/images/GifPixelArt/greenPixel.gif",
+    "personalInfo": "<strong>Name:</strong> Văn Phong <br> <strong>Birth:</strong> 28/02/2005 <br> <strong>Sex:</strong> Male <br> <strong>School:</strong> University Of Transport HO CHI MINH City",
+    "professionalInfo": "<strong>Là một IT đang trên đường học tập và trau dồi kĩ năng</strong> <br> ",
+    "hobbies": "<strong>Xem phim, Đọc thông tin về công nghệ, Nghe nhạc</strong>",
+    "languages": "<strong>C/C++</strong> <br> <strong>Java</strong> <br> <strong>PHP</strong> <br> <strong>JavaScript</strong> <br>",
+    "skills": "Database, MySQL, SQL Server",
+    "certificates": "<strong>Không có</strong>",
+    "projects": "<strong>Ứng dụng TMDT (Android App)</strong> <br> <strong>Ứng dụng bán sách (Android App)</strong>"
+}

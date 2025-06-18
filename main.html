@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/styleAll.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Pixel Team - Main</title>
+</head>
+<body>
+    <header> 
+        <div class="corner-buttons">
+            <button class="corner-btn setting-btn">
+                <i class="fa-solid fa-gear"></i>
+            </button>
+            <button class="corner-btn home-btn" data-target="home">
+                <i class="fa-solid fa-house"></i>
+            </button>
+        </div>
+    </header>
+    <div class="container" id="mainContainer">
+        <!-- Dummy Member Select outside main-content -->
+        <div class="dummy-member-select-container">
+            <div class="dummy-member-select">
+                <div class="dummy-member" data-member="1">
+                    <img src="../assets/images/posterMember/poster-bao.png" alt="KhacBao">
+                </div>
+                <div class="dummy-member" data-member="2">
+                    <img src="../assets/images/posterMember/poster-thi.png" alt="NgocThi">
+                </div>
+                <div class="dummy-member" data-member="3">
+                    <img src="../assets/images/posterMember/poster-han.png" alt="BaoHan">
+                </div>
+                <div class="dummy-member" data-member="4">
+                    <img src="../assets/images/posterMember/poster-thu.png" alt="MinhThu">
+                </div>
+                <div class="dummy-member" data-member="5">
+                    <img src="../assets/images/posterMember/poster-phong.png" alt="VanPhong">
+                </div>
+            </div>
+            <div id="selection-text" class="selection-text">Hãy chọn một nhân vật!</div>
+        </div>
+
+        <div class="main-content">
+            <!-- Red Section: GIF Display -->
+            <div class="gif-section">
+                <div class="member-info">
+                    <h3 id="gif-name"></h3>
+                    <p id="gif-nickname"></p>
+                </div>
+                <img id="gif-display" src="" alt="Member GIF" style="display: none; max-width: 100%; max-height: 120%; object-fit: contain; transform: scale(1.7);">
+            </div>
+
+            <!-- Green Section: Modal Display -->
+            <div class="modal-section">
+                <div class="introduce">
+                    <h2>Giới Thiệu</h2>
+                </div> 
+                <div class="intro-section" id="intro-section"></div>
+                <a href="#" class="more-button" target="_blank" style="display: none;">More</a>
+            </div>
+
+            <!-- Member Select inside main-content -->
+            <div class="member-sidebar-bottom" style="grid-area: member;">
+                <div class="member-select">
+                    <div class="member" data-member="1">
+                        <img src="../assets/images/posterMember/poster-bao.png" alt="KhacBao">
+                        <div class="member-name">KhacBao<div class="nickName">Leader kiêu kì</div></div>
+                    </div>
+                    <div class="member" data-member="2">
+                        <img src="../assets/images/posterMember/poster-thi.png" alt="NgocThi">
+                        <div class="member-name">NgocThi<div class="nickName">Gamer háo thắng</div></div>
+                    </div>
+                    <div class="member" data-member="3">
+                        <img src="../assets/images/posterMember/poster-han.png" alt="BaoHan">
+                        <div class="member-name">BaoHan<div class="nickName">Tiktoker quyến rủ</div></div>
+                    </div>
+                    <div class="member" data-member="4">
+                        <img src="../assets/images/posterMember/poster-thu.png" alt="MinhThu">
+                        <div class="member-name">MinhThu<div class="nickName">Nàng thơ yêu kiều</div></div>
+                    </div>
+                    <div class="member" data-member="5">
+                        <img src="../assets/images/posterMember/poster-phong.png" alt="VanPhong">
+                        <div class="member-name">VanPhong<div class="nickName">Developer thần tốc</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../js/scriptMain.js"></script>
+</body>
+</html>
