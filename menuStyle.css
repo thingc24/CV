@@ -1,0 +1,994 @@
+/* Import Google Fonts - VT323 */
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+/* General Body and HTML styling */
+body {
+    margin: 0;
+    font-family: 'VT323', monospace; /* Áp dụng font VT323 */
+    /* background-color: #008080; Màu nền xanh đặc trưng của Windows XP */
+    background: url('../assets/images/imgHome/bgxanh.gif') no-repeat center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column; /* Đảm bảo body là flex column để taskbar ở dưới */
+    justify-content: flex-start; /* Nội dung chính lên trên */
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden; /* Ngăn cuộn trang tổng thể */
+    cursor: url('../assets/cursor/cursorWinXP.cur');
+    -webkit-font-smoothing: none; /* Hiệu ứng pixelated cho văn bản trên WebKit */
+    image-rendering: pixelated; /* Đảm bảo hình ảnh được render dưới dạng pixelated */
+}
+
+.taskbar i {
+    font-size: xx-large;
+    color: #000;
+}
+.taskbar i:hover {
+    color:#00B2B2;
+    transform: scale(0.9);
+}
+
+/* Mouse Trail Effect Styling */
+.trail-dot {
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.7); /* Màu trắng trong suốt */
+    border-radius: 50%;
+    pointer-events: none; /* Đảm bảo không ảnh hưởng đến sự kiện chuột khác */
+    opacity: 0; /* Bắt đầu ẩn */
+    animation: fadeOutTrail 0.7s forwards; /* Animation để biến mất */
+    z-index: 9999; /* Luôn nằm trên cùng */
+    transform: translate(-50%, -50%); /* Căn giữa chấm theo vị trí chuột */
+}
+
+@keyframes fadeOutTrail {
+    from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    to { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+}
+
+/* Desktop Area - Vùng làm việc chính nơi các cửa sổ xuất hiện */
+.desktop-area {
+    flex-grow: 1; /* Cho phép chiếm hết không gian còn lại */
+    width: 100vw;
+    height: calc(100vh - 40px); /* Trừ đi chiều cao taskbar */
+    position: relative; /* Quan trọng để các cửa sổ con được định vị tuyệt đối */
+    overflow: hidden; /* Ngăn tràn ra ngoài */
+}
+
+/* Window Frame - Khung của mỗi cửa sổ */
+.window-frame {
+    position: absolute; /* Quan trọng: để cửa sổ có thể kéo thả và xếp chồng */
+    background-color: #C0C0C0; /* Màu nền xám của cửa sổ XP */
+    border: 2px solid #FFFFFF; /* Viền trắng */
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5); /* Tạo chiều sâu */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-width: 800px; /* Kích thước tối thiểu cho cửa sổ */
+    min-height: 700px;
+
+    width: 1000px;      /* Kích thước mặc định lớn hơn khi khởi tạo */
+    height: 800px;     /* Kích thước mặc định lớn hơn khi khởi tạo */
+
+    resize: both; /* Giữ nguyên nếu bạn muốn resize thủ công */
+
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out; /* Animation khi mở/đóng */
+    
+    top: 50px; /* Vị trí mặc định ban đầu */
+    left: 50px;
+    z-index: 10; /* Z-index mặc định */
+}
+
+.window-frame.active {
+    opacity: 1;
+    transform: scale(1); /* Hiện ra và về kích thước thật */
+    pointer-events: auto; /* Cho phép tương tác */
+}
+
+.window-frame.minimized {
+    opacity: 0;
+    transform: scale(0);
+    pointer-events: none;
+    /* display: none; */ /* Bỏ display none để transition có thể chạy */
+}
+
+/* Khi đóng, sẽ có animation riêng */
+.window-frame.closing {
+    opacity: 0;
+    transform: scale(0.8); /* Thu nhỏ lại khi đóng */
+}
+
+
+/* Window Header (thanh tiêu đề cửa sổ) */
+.window-header {
+    background: linear-gradient(to right, #000080, #1084D0); /* Màu xanh gradient của thanh tiêu đề XP */
+    color: white;
+    padding: 2px 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: normal;
+    border-bottom: 1px solid #1084D0;
+    cursor: grab; /* Con trỏ kéo */
+    font-size: 1.4em;
+    height: 40px;
+    box-sizing: border-box;
+    user-select: none; /* Ngăn chọn văn bản khi kéo */
+}
+
+.window-title {
+    padding-left: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+}
+
+.window-controls {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.window-controls button {
+    background-color: #C0C0C0;
+    border: 1px solid;
+    border-color: #FFFFFF #808080 #808080 #FFFFFF;
+    width: 26px;
+    height: 26px;
+    margin-left: 2px;
+    cursor: pointer;
+    font-weight: normal;
+    font-size: 0.9em;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: none;
+    transition: all 0.05s ease;
+}
+
+.window-controls button:hover {
+    background-color: #008080;
+}
+
+.close-btn:hover {
+    color: white;
+    background-color: red !important;
+}
+
+.window-controls button:active {
+    border-color: #808080 #FFFFFF #FFFFFF #808080;
+    transform: translate(1px, 1px);
+}
+
+.minimize-btn::before { content: '—'; }
+.maximize-btn::before { content: '▭'; }
+.close-btn::before { content: 'X'; }
+
+/* Top Menu Bar (thanh menu mới) */
+.top-menu-bar {
+    background-color: #C0C0C0; /* Màu xám */
+    border-bottom: 1px solid #808080;
+    padding: 0px 5px; /* Giảm padding */
+    display: flex;
+    flex-wrap: wrap; /* Cho phép xuống dòng nếu quá nhiều mục */
+    justify-content: flex-start; /* Căn trái */
+    align-items: center;
+    min-height: 60px; /* Chiều cao tối thiểu */
+    box-sizing: border-box;
+}
+
+.menu-item {
+    display: inline-block; /* Để các mục menu nằm cạnh nhau */
+    padding: 2px 8px; /* Padding cho chữ */
+    color: #333;
+    text-decoration: none;
+    font-size: 1.6em; /* Kích thước chữ */
+    border: 1px solid transparent; /* Viền trong suốt để không làm thay đổi kích thước khi hover */
+    border-color: #FFFFFF #808080 #808080 #FFFFFF;
+    margin-right: 2px; /* Khoảng cách giữa các mục */
+    transition: all 0.05s ease; /* Hiệu ứng nhấn */
+    box-sizing: border-box;
+    white-space: nowrap; /* Ngăn xuống dòng */
+}
+
+.menu-item:hover {
+    background-color: #000080; /* Màu xanh khi hover */
+    color: white;
+    border-color: #000080; /* Viền trùng màu nền */
+}
+
+.menu-item.active {
+    background-color: #000080; /* Màu xanh khi active */
+    color: white;
+    border-color: #000080;
+}
+
+.menu-item:active {
+    background-color: #808080; /* Hiệu ứng nhấn chìm */
+    color: #FFF;
+    border-color: #808080;
+}
+
+/* Window Content (Nội dung bên trong mỗi cửa sổ) */
+/* ========================================= */
+/* Cập nhật cho .window-content và con của nó */
+/* ========================================= */
+
+.window-content {
+    flex-grow: 1;
+    background-color: #EFEFEF; /* Màu nền dự phòng */
+    padding: 20px; /* Tăng padding để có không gian */
+    overflow-y: auto; /* Cho phép cuộn nội dung bên trong cửa sổ */
+    border: 1px solid #808080;
+    border-top: none;
+    border-bottom: none;
+    box-sizing: border-box;
+    font-size: 1.6em;
+    color: #333; /* Màu chữ mặc định */
+
+    /* Nền gradient động */
+    background: linear-gradient(135deg, #EFEFEF 0%, #C0C0C0 50%, #EFEFEF 100%);
+    background-size: 400% 400%; /* Lớn hơn để tạo hiệu ứng chuyển động mượt */
+    animation: gradientShift 15s ease infinite; /* Animation chuyển màu */
+
+    /* Thêm một lớp phủ pixel nhẹ (tùy chọn, tạo cảm giác 'glitch') */
+    position: relative; /* Quan trọng cho pseudo-elements */
+}
+
+/* Pseudo-element cho hiệu ứng pixelated overlay (tùy chọn) */
+.window-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml;utf8,<svg width="4" height="4" viewBox="0 0 4 4" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="2" height="2" fill="rgba(0,0,0,0.05)"/><rect x="2" y="2" width="2" height="2" fill="rgba(0,0,0,0.05)"/></svg>');
+    background-size: 4px 4px;
+    pointer-events: none; /* Đảm bảo không chặn tương tác */
+    opacity: 0.7; /* Làm mờ để không quá gây xao nhãng */
+    animation: pixelatedOverlay 3s steps(1) infinite; /* Animation pixel nhẹ */
+}
+
+
+/* Tiêu đề H2 - Hiệu ứng gõ chữ và bóng đổ */
+.window-content h2 {
+    color: #000080; /* Màu xanh đậm cổ điển */
+    text-shadow: 2px 2px #C0C0C0; /* Bóng đổ cho chữ nổi khối */
+    margin-bottom: 20px;
+    font-size: 2.2em; /* Tăng kích thước tiêu đề */
+    overflow: hidden; /* Quan trọng để animation gõ chữ hoạt động */
+    white-space: nowrap; /* Giữ chữ trên một dòng */
+    animation: 
+        typing 4s steps(20) forwards; /* Animation gõ chữ *
+    width: 0; /* Bắt đầu với chiều rộng 0 để animation typing hiển thị */
+    max-width: 100%; /* Đảm bảo không tràn */
+    padding-right: 5px; /* Khoảng cách cho con trỏ */
+}
+
+.window-content h3 {
+    margin-left: 20px;
+}
+
+.window-content li {
+    list-style-type: none; /* Lệnh để bỏ dấu chấm */
+    padding-left: 0;      /* Thường đi kèm để loại bỏ padding mặc định của UL */
+    margin: 0;            /* Loại bỏ margin mặc định của UL */
+    font-size: xx-large;
+}
+
+.window-content i:hover {
+    color: #00B2B2;
+    transform: scale(1.2);
+}
+
+/* Grid cho thông tin - Hiệu ứng xuất hiện và hover */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Cột linh hoạt */
+    gap: 15px; /* Khoảng cách giữa các mục */
+    margin-top: 20px;
+    opacity: 0; /* Bắt đầu ẩn để animation xuất hiện */
+    animation: fadeInSlideUp 1s ease-out 3s forwards; /* Animation trễ sau tiêu đề */
+}
+
+.info-item {
+    background-color: #e0e0e0; /* Màu xám sáng */
+    padding: 15px;
+    border: 2px solid #808080; /* Viền 3D cơ bản */
+    box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2); /* Bóng đổ tạo cảm giác nổi */
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background-color 0.2s ease-out;
+    color: #000;
+
+    /* Thêm hiệu ứng gạch ngang khi hover */
+    position: relative;
+    overflow: hidden; /* Quan trọng cho hiệu ứng gạch ngang */
+}
+
+.info-item strong,
+.info-item p {
+    color: #0000A0; /* Màu xanh đậm hơn cho tiêu đề */
+    font-size: 1.2em;
+}
+
+.info-item:hover {
+    transform: translateY(-3px) scale(1.02); /* Nâng lên và hơi lớn hơn khi hover */
+    box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.5); /* Bóng đổ sâu hơn */
+    background-color: #B0B0B0; /* Đổi màu nền khi hover */
+    cursor: pointer;
+}
+
+/* Hiệu ứng gạch ngang từ trái sang phải khi hover */
+.info-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px; /* Độ dày của đường gạch ngang */
+    background-color: #00B2B2; /* Màu hồng neon */
+    transform: translateX(-100%); /* Bắt đầu ẩn ở ngoài */
+    transition: transform 0.3s ease-out;
+}
+
+.info-item:hover::after {
+    transform: translateX(0); /* Kéo vào từ trái khi hover */
+}
+
+/* ========================================= */
+/* KEYFRAMES CHO CÁC ANIMATION MỚI */
+/* ========================================= */
+
+/* Animation chuyển động gradient nền */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Animation hiệu ứng gõ chữ (cho h2) */
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; } /* Kết thúc ở chiều rộng tự nhiên của văn bản */
+}
+
+/* Animation fade-in và slide-up cho info-grid */
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation pixelated overlay (tùy chọn) */
+@keyframes pixelatedOverlay {
+    0% { opacity: 0.05; }
+    50% { opacity: 0.1; }
+    100% { opacity: 0.05; }
+}
+
+/* Main content home - specific styling */
+.main-content-home {
+    background-color: #EFEFEF;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch; /* Đảm bảo các item bên trong kéo dài hết chiều rộng */
+    padding: 10px;
+    gap: 20px;
+}
+
+.project-item img {
+    width: 60%;
+    height: auto;
+}
+
+.project-item img:hover {
+    width: 90%;
+    height: auto;
+}
+
+/* Styling for content within sections (ví dụ: các ô giống Windows XP) */
+.intro-box, .info-grid, .project-item, .contact-form {
+    background-color: #FFFFFF;
+    border: 1px solid #808080;
+    padding: 10px;
+    margin-bottom: 0;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.intro-box {
+    text-align: center;
+}
+
+.intro-box h2 {
+    font-size: 2.5em;
+}
+
+.intro-box p{
+    font-size: 2em;
+}
+
+.intro-box span {
+    animation: glow 0.5s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%,
+    100% {
+        color:#008080;
+    }
+    20%,
+    40%,
+    60%,
+    80% {
+        color: #000080;
+    }
+}
+
+.avatar-placeholder {
+    border-radius: 50%;
+    margin-bottom: 10px;
+    border: 2px solid #000080;
+    width: 200px;
+    height: 200px;
+    image-rendering: optimizeQuality;
+}
+
+.avatar-placeholder:hover {
+    box-shadow: 0 0 20px #00B2B2;
+    transform: scale(0.9);
+}
+
+h2 {
+    color: #000080;
+    border-bottom: 1px solid #A0A0A0;
+    padding-bottom: 3px;
+    margin-top: 0;
+    font-size: 1.3em;
+}
+
+h3 {
+    color: #333;
+    margin-top: 15px;
+    font-size: 1.1em;
+}
+
+p, li, label {
+    font-size: 0.9em;
+    line-height: 1.3;
+}
+
+ul {
+    list-style-type: '◼ '; /* Dấu đầu dòng hình vuông unicode */
+    margin-left: 20px;
+    padding-left: 0;
+}
+
+a {
+    color: #0000FF;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 5px;
+}
+
+.info-item strong {
+    color: #555;
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 3px;
+    font-weight: normal;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+    width: calc(100% - 16px);
+    padding: 4px 6px;
+    margin-bottom: 8px;
+    border: 1px solid #808080;
+    background-color: #F8F8F8;
+    box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.2);
+    font-family: 'VT323', monospace;
+    font-size: 0.9em;
+}
+
+/* Button style giống Windows XP */
+.button-xp {
+    background-color: #C0C0C0;
+    border: 1px solid;
+    border-color: #FFFFFF #808080 #808080 #FFFFFF;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-family: 'VT323', monospace;
+    font-size: 0.9em;
+    margin-top: 5px;
+    transition: all 0.05s ease;
+    white-space: nowrap;
+}
+
+.button-xp:active {
+    border-color: #808080 #FFFFFF #FFFFFF #808080;
+    transform: translate(1px, 1px);
+}
+
+.button-xp:hover {
+    color:#00B2B2;
+    transform: scale(0.99);
+}
+
+/* Instagram Mock Styling */
+.instagram-mock-container {
+    background-color: #C0C0C0;
+    border: 1px solid #808080;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    /* Đã loại bỏ max-width và align-self để nó mở rộng hết chiều rộng */
+    width: 100%; /* Đảm bảo nó chiếm 100% chiều rộng của cha nó */
+    height: auto;
+    margin-bottom: 50px;
+}
+
+.instagram-mock-header {
+    background-color: #C0C0C0;
+    border-bottom: 1px solid #808080;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    font-size: 1.4em;
+    height: 50px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.instagram-mock-header .profile-pic {
+    width: 32px;
+    height: 32px;
+    background-color: black;
+    border-radius: 50%;
+    margin-right: 5px;
+    flex-shrink: 0;
+}
+
+.instagram-mock-header .username {
+    flex-grow: 1;
+}
+
+.instagram-mock-header .username:hover {
+    color:red;
+    font-size: 1.6em;
+    padding-left: 5px;
+}
+
+.instagram-mock-header .options-dots {
+    font-size: 1.5em;
+    line-height: 1;
+}
+
+.instagram-mock-image-area {
+    flex-grow: 1;
+    background-color: #00B2B2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.instagram-mock-image-area img {
+    width: 100%; /* Chiếm 100% chiều rộng của vùng chứa */
+    height: 100%; /* Chiếm 100% chiều cao của vùng chứa */
+    object-fit: contain; /* Lấp đầy vùng chứa, có thể cắt ảnh nếu tỷ lệ không khớp */
+    image-rendering: pixelated;
+    display: block;
+}
+
+/* Styling for .instagram-mock-image-area when it contains 4 images */
+.instagram-mock-container.four-images-post .instagram-mock-image-area {
+    display: grid; /* Sử dụng Grid cho những bài đăng có class four-images-post */
+    grid-template-columns: 1fr 1fr; /* 2 cột bằng nhau */
+    grid-template-rows: 1fr 1fr; /* 2 hàng bằng nhau */
+    gap: 1px;
+    /* Không cần justify-content, align-items nữa vì grid đã tự căn chỉnh */
+}
+
+/* Đảm bảo ảnh bên trong .four-images-post fill hoàn toàn ô grid của chúng */
+.instagram-mock-container.four-images-post .instagram-mock-image-area img {
+    width: 95%;
+    height: 95%;
+    object-fit: contain; /* Đảm bảo ảnh lấp đầy ô, có thể bị cắt */
+    display: block;
+    image-rendering: pixelated;
+}
+
+/* Styling for .instagram-mock-image-area when it contains 2 images */
+
+
+.instagram-mock-container.two-images-post .instagram-mock-image-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 cột bằng nhau */
+    gap: 1px;
+    /* Không cần justify-content, align-items nữa vì grid đã tự căn chỉnh */
+}
+
+/* Đảm bảo ảnh bên trong .two-images-post fill hoàn toàn ô grid của chúng */
+.instagram-mock-container.two-images-post .instagram-mock-image-area img {
+    width: 95%;
+    height: 95%;
+    object-fit: contain; /* Đảm bảo ảnh lấp đầy ô, có thể bị cắt */
+    display: block;
+    image-rendering: pixelated;
+}
+
+.instagram-mock-footer {
+    background-color: #C0C0C0;
+    border-top: 1px solid #808080;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    height: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-shrink: 0;
+}
+
+.instagram-mock-actions {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 5px;
+}
+
+.instagram-mock-actions .button-xp {
+    padding: 3px 8px;
+    font-size: 1em;
+    width: 15%;
+    height: 130%;
+}
+
+.instagram-mock-footer p {
+    font-size: 1.2em;
+    margin-left: 10px;
+}
+
+.heart {
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+.heart:hover {
+    color: red;
+}
+
+span:hover {
+    color: #00B2B2;
+    text-shadow: black;
+}
+
+.instagram-mock-footer h4 {
+    font-size: 1.4em;
+    margin: 0;
+    margin-left: 10px;
+}
+
+
+/* Taskbar (Thanh tác vụ) */
+.taskbar {
+    background-color: #C0C0C0;
+    border-top: 2px solid #FFFFFF;
+    padding: 2px 5px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 40px; /* Chiều cao cố định */
+    box-sizing: border-box;
+    flex-shrink: 0; /* Ngăn co lại */
+    z-index: 2000; /* Luôn nằm trên cùng */
+}
+
+.taskbar .start-button {
+    height: 30px;
+    padding: 0 10px;
+    font-size: 1em;
+    margin-right: 5px;
+    background: linear-gradient(to right, #000080, #1084D0); /* Giống start button XP */
+    color: white;
+    border-color: #FFFFFF #808080 #808080 #FFFFFF;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.taskbar .start-button::before {
+    content: '■'; /* Biểu tượng Windows đơn giản */
+    font-size: 1.2em;
+    margin-top: -2px; /* Tinh chỉnh vị trí biểu tượng */
+}
+
+.taskbar-windows-list {
+    flex-grow: 1; /* Chiếm hết không gian còn lại */
+    display: flex;
+    gap: 3px;
+    height: 100%;
+    overflow-x: auto; /* Cuộn nếu có quá nhiều cửa sổ */
+    padding-left: 5px;
+    padding-right: 5px;
+    box-sizing: border-box;
+}
+
+.taskbar-window-button {
+    background-color: #C0C0C0;
+    border: 1px solid;
+    border-color: #FFFFFF #808080 #808080 #FFFFFF;
+    padding: 2px 8px;
+    cursor: pointer;
+    font-family: 'VT323', monospace;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    max-width: 150px; /* Giới hạn chiều rộng nút */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 30px; /* Chiều cao cố định */
+    box-sizing: border-box;
+    flex-shrink: 0; /* Ngăn co lại khi có nhiều nút */
+}
+
+.taskbar-window-button:hover {
+    background-color: #DCDCDC;
+}
+
+.taskbar-window-button:active, .taskbar-window-button.active {
+    border-color: #808080 #FFFFFF #FFFFFF #808080;
+    background-color: #E0E0E0;
+    transform: translate(1px, 1px);
+    box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.taskbar-system-tray {
+    padding: 0 5px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border-left: 1px solid #808080;
+    box-shadow: inset 1px 0px 0px #FFFFFF;
+    font-size: 0.9em;
+    min-width: 60px; /* Cho đồng hồ */
+    justify-content: flex-end;
+}
+
+/* ========================================= */
+/* RESPONSIVE DESIGN - MEDIA QUERIES */
+/* ========================================= */
+
+/* Mobile devices (portrait and landscape) and smaller tablets */
+@media (max-width: 768px) {
+    body {
+        /* Không cần flex-direction: column; vì nó đã có ở trên */
+        min-height: 100vh; /* Đảm bảo chiều cao tối thiểu */
+        overflow-y: auto; /* Cho phép cuộn trên mobile nếu nội dung quá dài */
+        overflow-x: hidden; /* Ngăn cuộn ngang không mong muốn */
+    }
+
+    .desktop-area {
+        height: calc(100vh - 35px); /* Chiếm phần còn lại sau taskbar */
+        overflow: hidden; /* Vẫn ẩn tràn cho desktop area */
+    }
+
+    .window-frame {
+        width: 98vw !important; /* Chiếm gần toàn bộ chiều rộng viewport */
+        height: calc(100vh - 45px) !important; /* Chiếm gần toàn bộ chiều cao viewport, trừ taskbar và một ít margin */
+        top: 20px !important; /* Đặt gần top hơn */
+        left: 1vw !important; /* Căn giữa bằng cách đặt left và width */
+        transform: none !important; /* Bỏ transform scale khi khởi tạo */
+        min-width: unset; /* Bỏ giới hạn min-width */
+        min-height: unset; /* Bỏ giới hạn min-height */
+        resize: none !important; /* Tắt khả năng resize trên mobile */
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4); /* Bóng đổ nhẹ hơn */
+    }
+
+    .window-frame.maximized {
+        /* Khi maximize trên mobile, nó đã chiếm toàn màn hình rồi */
+        width: 100vw !important;
+        height: calc(100vh - 35px) !important;
+        top: 0 !important;
+        left: 0 !important;
+    }
+
+    /* Ẩn hiệu ứng chuột trên thiết bị cảm ứng */
+    .trail-dot {
+        display: none;
+    }
+    body {
+        cursor: default; /* Trở lại con trỏ mặc định */
+    }
+
+    .window-header {
+        height: 20px; /* Giảm chiều cao header */
+        font-size: 0.9em; /* Giảm kích thước font tiêu đề */
+        padding: 2px 4px; /* Giảm padding */
+    }
+
+    .window-controls button {
+        width: 18px; /* Giảm kích thước nút điều khiển */
+        height: 18px;
+        font-size: 0.7em;
+    }
+
+    .top-menu-bar {
+        padding: 0px 2px;
+        min-height: 20px; /* Giảm chiều cao menu bar */
+        flex-wrap: wrap; /* Cho phép các menu item xuống dòng nếu quá nhiều */
+        justify-content: center; /* Căn giữa các menu item */
+    }
+
+    .menu-item {
+        padding: 2px 6px; /* Giảm padding menu item */
+        font-size: 0.8em;
+    }
+
+    .window-content {
+        padding: 15px; /* Giảm padding nội dung */
+        font-size: 1.2em; /* Giảm kích thước font tổng thể */
+    }
+    .window-content h2 {
+        font-size: 1.8em; /* Giảm kích thước h2 */
+        margin-bottom: 15px;
+        white-space: normal; /* Cho phép tiêu đề h2 xuống dòng nếu quá dài */
+        border-right: none; /* Ẩn con trỏ gõ chữ trên mobile nếu muốn */
+        animation: none; /* Tắt animation typing trên mobile */
+        width: auto; /* Để tiêu đề hiển thị đầy đủ */
+    }
+    /* Đảm bảo animation của info-grid vẫn hoạt động sau khi tắt animation h2 */
+    .info-grid {
+        animation: fadeInSlideUp 1s ease-out forwards; /* Bỏ delay */
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr; /* Chỉ 1 cột trên mobile */
+        gap: 10px; /* Giảm khoảng cách */
+    }
+    .info-item {
+        padding: 12px;
+    }
+    .info-item strong {
+        font-size: 1em;
+    }
+    .info-description p {
+        font-size: 0.85em; /* Kích thước chữ mô tả */
+    }
+    .info-description img {
+        margin-top: 8px; /* Giảm khoảng cách trên ảnh */
+    }
+
+    /* Taskbar adjustments */
+    .taskbar {
+        height: 35px; /* Giữ nguyên chiều cao taskbar */
+        padding: 0 5px;
+    }
+    .start-button {
+        font-size: 1em;
+        padding: 2px 8px;
+        height: 30px;
+    }
+    .start-button::before {
+        content: 'Start';
+    }
+    .start-button::after {
+        content: ''; /* Ẩn icon trên mobile để tiết kiệm không gian */
+    }
+    .taskbar-windows-list {
+        gap: 2px;
+    }
+    .taskbar-window-button {
+        max-width: 100px; /* Giới hạn chiều rộng nút taskbar */
+        height: 30px;
+        font-size: 0.8em;
+        padding: 2px 5px;
+    }
+    .system-time {
+        font-size: 0.8em;
+        height: 30px;
+        padding: 2px 5px;
+    }
+
+    /* Contact form adjustments */
+    .contact-form input[type="text"],
+    .contact-form input[type="email"],
+    .contact-form textarea {
+        width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng */
+        padding: 6px 8px;
+        font-size: 0.9em;
+    }
+    .button-xp {
+        font-size: 1em;
+        padding: 4px 12px;
+    }
+
+    /* Instagram mock area */
+    .instagram-mock-image-area {
+        grid-template-columns: 1fr; /* 1 cột trên mobile cho khu vực ảnh Instagram */
+        grid-template-rows: auto; /* Chiều cao tự động */
+        max-height: 400px; /* Giới hạn chiều cao tổng thể để tránh chiếm quá nhiều không gian */
+        overflow-y: auto; /* Cho phép cuộn nếu nhiều ảnh */
+    }
+    .instagram-mock-image-area img {
+        height: 200px; /* Chiều cao cố định cho mỗi ảnh trên mobile */
+        object-fit: contain; /* Đảm bảo ảnh hiển thị đầy đủ */
+    }
+}
+
+/* Tablet devices (landscape) and small laptops */
+@media (min-width: 769px) and (max-width: 1200px) {
+    .window-frame {
+        width: 90vw;
+        height: 85vh;
+        top: 5vh;
+        left: 5vw;
+        min-width: 500px;
+        min-height: 400px;
+    }
+
+    .window-content {
+        padding: 18px;
+        font-size: 1.4em;
+    }
+    .window-content h2 {
+        font-size: 2em;
+    }
+    .info-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 12px;
+    }
+    .info-item {
+        padding: 14px;
+    }
+    .info-item strong {
+        font-size: 1.05em;
+    }
+    .info-description p {
+        font-size: 0.88em;
+    }
+
+    .instagram-mock-image-area {
+        grid-template-columns: 1fr 1fr; /* Vẫn 2 cột */
+        max-height: unset; /* Bỏ giới hạn chiều cao */
+        overflow-y: hidden;
+    }
+    .instagram-mock-image-area img {
+        height: auto; /* Tự động chiều cao */
+        object-fit: cover;
+    }
+}
+
+/* Large screens (desktop) - giữ nguyên hoặc tinh chỉnh nhẹ */
+@media (min-width: 1201px) {
+    /* Các style mặc định đã được tối ưu cho desktop, không cần thay đổi nhiều */
+    .window-frame {
+        /* Giữ nguyên kích thước lớn mặc định 1400x1000 đã đặt ở trên */
+        width: 1400px; 
+        height: 1000px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1); /* Căn giữa cửa sổ chính */
+        /* Các giá trị này có thể được JS override khi khởi tạo */
+    }
+}

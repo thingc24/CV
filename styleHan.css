@@ -1,0 +1,598 @@
+/* General Body & HTML */
+body {
+    font-family: 'VT323', monospace; /* Font kiểu pixel */
+    margin: 0;
+    overflow: hidden; /* Ngăn cuộn trang */
+    background-color: #e0f2f7; /* Màu nền pastel nhẹ nhàng */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    cursor: url('../assets/cursor/cursorWinXP.cur'), auto; /* Cursor kiểu Win XP */
+    user-select: none; /* Ngăn chặn chọn văn bản */
+}
+
+/* Scrollbar Style - Custom Scrollbar for Windows */
+::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f0f0f0; /* Màu nền track */
+    border: 1px solid #c0c0c0;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c0c0c0; /* Màu thumb */
+    border: 1px solid #808080;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a0a0a0;
+}
+
+/* Desktop Background - Hình nền Win XP pastel */
+.desktop {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../assets/images/imgHome/backGroundPixelHan.gif'); /* Thay thế bằng hình nền của bạn */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Win XP Window Styles */
+.window {
+    background-color: #fff;
+    border: 2px solid #808080;
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    min-width: 800px;
+    min-height: 600px;
+    resize: both; /* Cho phép thay đổi kích thước */
+    overflow: hidden;
+    display: none; /* Mặc định ẩn */
+    border-radius: 4px;
+    transform: scale(0.9); /* Hiệu ứng mở cửa sổ */
+    opacity: 0;
+    transition: all 0.3s ease-out;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    z-index: 10; /* Đảm bảo cửa sổ nằm trên các thành phần khác */
+}
+
+.window.active {
+    display: block;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    z-index: 20; /* Cửa sổ active nằm trên cùng */
+}
+
+.title-bar {
+    background: linear-gradient(to right, #ffb3c1, #ffdddf); /* Gradient pastel hồng */
+    padding: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: grab; /* Con trỏ kéo */
+    border-bottom: 1px solid #ff92a4;
+    border-radius: 2px 2px 0 0;
+}
+
+.title-bar-text {
+    color: #333;
+    font-weight: bold;
+    font-size: 1.2em; /* Chữ lớn hơn */
+    padding-left: 5px;
+}
+
+.title-bar-controls button {
+    background-color: #c0c0c0;
+    border: 1px solid #808080;
+    width: 24px;
+    height: 24px;
+    font-size: 1.2em;
+    line-height: 1;
+    padding: 0;
+    cursor: pointer;
+    box-shadow: inset -1px -1px #fff, inset 1px 1px #000;
+    margin-left: 2px;
+}
+
+.title-bar-controls button:active {
+    box-shadow: inset 1px 1px #fff, inset -1px -1px #000;
+}
+
+/* Icons for title bar controls */
+.title-bar-controls button[aria-label="Minimize"] {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="3" y="10" width="10" height="2" fill="black"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.title-bar-controls button[aria-label="Maximize"] {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect x="3" y="3" width="10" height="10" stroke="black" stroke-width="2" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.title-bar-controls button[aria-label="Close"] {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path d="M4 4l8 8m0-8l-8 8" stroke="black" stroke-width="2"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+.window-body {
+    padding: 15px;
+    background-color: #f8f8f8; /* Nền trắng sáng cho nội dung */
+    color: #333;
+    overflow-y: auto; /* Cho phép cuộn nội dung */
+    height: calc(100% - 40px); /* Chiều cao tự điều chỉnh */
+    box-sizing: border-box;
+    font-size: 1.6em; /* Chữ lớn hơn */
+}
+
+.window-body h1, .window-body h2, .window-body h3 {
+    color: #e67399; /* Màu tiêu đề hồng đậm */
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5); /* Hiệu ứng chữ nổi */
+}
+
+.window-body h2:hover {
+    box-shadow: #000;
+}
+
+.window-body p, .window-body ul, .window-body li {
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.window-body i:hover {
+    transform: scale(1.5);
+    color: #e67399;
+}
+
+/* Home Content */
+.home-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.home-content h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+    color: #d1495b;
+    animation: fadeInDown 1s ease-out; /* Hiệu ứng Fade In Down */
+}
+
+.home-content .typewriter-effect {
+    font-size: 1.8em;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: .15em solid orange; /* Hiệu ứng con trỏ */
+    animation: typing 3s steps(40, end), blink-caret .75s step-end infinite;
+    margin-bottom: 30px;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: orange }
+}
+
+.avatar-container {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid #ffccdd; /* Viền avatar pastel */
+    box-shadow: 0 0 15px rgba(255, 192, 203, 0.6); /* Đổ bóng hồng */
+    margin-bottom: 30px;
+    animation: pulse 2s infinite alternate; /* Hiệu ứng nhấp nháy nhẹ */
+}
+
+@keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Win XP Buttons */
+.win-button {
+    background-color: #c0c0c0;
+    border: 1px solid #808080;
+    padding: 8px 15px;
+    font-size: 1.1em;
+    cursor: pointer;
+    box-shadow: inset -1px -1px #fff, inset 1px 1px #000;
+    margin-top: 15px;
+    transition: all 0.1s ease-in-out;
+    color: #333;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.win-button:hover {
+    background-color: #b0b0b0;
+}
+
+.win-button:active {
+    box-shadow: inset 1px 1px #fff, inset -1px -1px #000;
+    transform: translateY(1px);
+}
+
+/* Start Bar */
+.start-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(to right, #a1c4fd, #c2e9fb); /* Gradient xanh pastel */
+    border-top: 2px solid #6495ed;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    box-sizing: border-box;
+    z-index: 100; /* Luôn nằm trên cùng */
+}
+
+.start-button {
+    background-color: #4CAF50; /* Màu xanh lá đặc trưng Start */
+    color: white;
+    padding: 5px 15px;
+    border: 2px outset #f0f0f0;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+}
+
+.start-button:active {
+    border-style: inset;
+    background-color: #3e8e41;
+}
+
+.start-button i {
+    margin-right: 8px;
+}
+
+.system-tray {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    color: #333;
+    font-size: 1.1em;
+}
+
+.system-tray i {
+    margin-left: 10px;
+    padding: 5px;
+    border: 1px solid transparent;
+}
+
+.system-tray i:hover {
+    border: 1px solid #ccc;
+    background-color: rgba(255,255,255,0.2);
+}
+
+#time {
+    margin-left: 10px;
+    padding: 0 5px;
+}
+
+/* Navigation Bar - Thanh điều hướng SPA */
+.navbar {
+    position: fixed; /* Hoặc absolute nếu muốn trong desktop */
+    top: 50%;
+    left: 20px; /* Vị trí bên trái desktop */
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.8); /* Nền trong suốt nhẹ */
+    border: 2px solid #ffccdd;
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+    padding: 10px 5px;
+    border-radius: 8px;
+    z-index: 50; /* Nằm dưới các cửa sổ */
+}
+
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar li {
+    margin-bottom: 8px;
+}
+
+.navbar a {
+    display: block;
+    padding: 8px 15px;
+    color: #e67399; /* Màu chữ hồng */
+    text-decoration: none;
+    font-size: 1.2em; /* Chữ lớn */
+    border: 1px solid transparent;
+    transition: all 0.2s ease-in-out;
+    border-radius: 4px;
+}
+
+.navbar a:hover {
+    background-color: #ffe6ee; /* Hiệu ứng hover pastel */
+    border: 1px solid #ffb3c1;
+    transform: translateX(5px); /* Hiệu ứng trượt */
+}
+
+.navbar a.active-nav {
+    background-color: #ffccdd;
+    border: 1px solid #ff92a4;
+    font-weight: bold;
+    box-shadow: inset 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Skills Section */
+.skill-category {
+    margin-bottom: 25px;
+    padding: 10px;
+    border: 1px solid #ffccdd;
+    border-radius: 5px;
+    background-color: #fff9fb;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+}
+
+.skill-category h4 {
+    color: #d1495b;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.3em;
+}
+
+.skill-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.skill-item {
+    background-color: #fff;
+    border: 1px solid #ffb3c1;
+    padding: 12px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease-in-out;
+}
+
+.skill-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 2px 5px 8px rgba(0,0,0,0.1);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background-color: #ff6699; /* Màu hồng cho tiến độ */
+    border-radius: 5px;
+    transition: width 0.8s ease-out; /* Hiệu ứng động cho thanh tiến độ */
+}
+
+/* Carousel for Certificates */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 20px;
+    border: 2px solid #ffccdd;
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+    min-width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 10px;
+}
+
+.carousel-item img {
+    max-width: 80%;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
+    border: 3px solid #ff92a4;
+    border-radius: 5px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.2);
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 102, 153, 0.7); /* Nút điều hướng hồng trong suốt */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1.5em;
+    border-radius: 50%;
+    z-index: 1;
+    transition: background-color 0.2s;
+}
+
+.carousel-button:hover {
+    background-color: rgba(255, 102, 153, 0.9);
+}
+
+.carousel-button.prev {
+    left: 10px;
+}
+
+.carousel-button.next {
+    right: 10px;
+}
+
+/* Project Section */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.project-card {
+    background-color: #fff;
+    border: 2px solid #ffccdd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease-out;
+}
+
+.project-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.project-card h3 {
+    color: #d1495b;
+    margin-bottom: 10px;
+    font-size: 1.4em;
+}
+
+.project-card img {
+    max-width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ff92a4;
+}
+
+/* Contact Form */
+.contact-form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #e67399;
+}
+
+.form-group input,
+.form-group textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ffccdd;
+    border-radius: 5px;
+    background-color: #fff9fb;
+    font-family: 'VT323', monospace;
+    font-size: 1.1em;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #ff92a4;
+    box-shadow: 0 0 5px rgba(255, 102, 153, 0.5);
+}
+
+/* Context Menu */
+.context-menu {
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #808080;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+    padding: 5px 0;
+    display: none;
+    z-index: 1000;
+}
+
+.context-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.context-menu li {
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #333;
+}
+
+.context-menu li:hover {
+    background-color: #ffe6ee;
+    color: #d1495b;
+}
+
+.context-menu li.separator {
+    border-top: 1px solid #ccc;
+    margin: 5px 0;
+    padding: 0;
+}
+
+/* Animations and Effects */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* More subtle animations for windows */
+@keyframes windowOpen {
+    from { transform: scale(0.8) translate(-50%, -50%); opacity: 0; }
+    to { transform: scale(1) translate(-50%, -50%); opacity: 1; }
+}
+
+@keyframes windowClose {
+    from { transform: scale(1) translate(-50%, -50%); opacity: 1; }
+    to { transform: scale(0.8) translate(-50%, -50%); opacity: 0; }
+}

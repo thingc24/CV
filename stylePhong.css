@@ -1,0 +1,1614 @@
+/* Reset và Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Sử dụng font cho nội dung (Poppins) */
+    font-family: 'Poppins', sans-serif;
+    /* Áp dụng image-rendering và font-smoothing cho hiệu ứng pixel art */
+    image-rendering: pixelated; /* Giúp ảnh pixel art sắc nét */
+    /* Tắt font-smoothing để tạo cảm giác pixelated cho font chữ (đặc biệt hiệu quả với Press Start 2P) */
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: none;
+}
+
+/* Định nghĩa các biến màu Pixel Team (lấy cảm hứng từ styleAll.css) */
+:root {
+    --bg-color: #080808; /* Màu nền chính (đen) */
+    --second-bg-color: #101010; /* Màu nền phụ (đen hơi nhạt) */
+    --main-color: #15a9ff; /* Màu chủ đạo cho Phong (xanh dương) */
+    --text-color: #ffffff; /* Màu chữ chính (trắng) */
+    --cl1-color: #08dfcd; /* Màu phụ 1 (cyan/turquoise) */
+    --cl2-color: #ff00ff; /* Màu phụ 2 (magenta) */
+    --border-color: #000; /* Màu border thường dùng trong pixel art (đen) */
+    --border-color-light: #333; /* Màu border đen nhạt hơn */
+    --shadow-color-dark: rgba(0, 0, 0, 0.8); /* Màu shadow tối */
+    --shadow-color-glow-main: 0 0 15px var(--main-color); /* Shadow glow màu chủ đạo */
+    --shadow-color-glow-cl1: 0 0 15px var(--cl1-color); /* Shadow glow màu phụ 1 */
+    --shadow-color-glow-cl2: 0 0 15px var(--cl2-color); /* Shadow glow màu phụ 2 */
+}
+
+body {
+    line-height: 1.6;
+    background: url('../assets/images/imgPhongPage/back4.gif');
+    background-size: cover;
+    background-attachment: fixed; /* Giữ nền cố định khi cuộn */
+    color: var(--text-color);
+    border: rgb(153, 152, 152) solid 1px;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    font-size: 1rem;
+    overflow-x: hidden; /* Ẩn scroll ngang */
+    /* overflow-y: hidden; */ /* Tùy chọn: Ẩn scroll dọc nếu muốn làm hiệu ứng toàn màn hình */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+    display: none; /* Ẩn scrollbar trên Webkit browsers */
+}
+
+a {
+    text-decoration: none;
+    color: var(--cl1-color);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    text-shadow: 1px 1px 2px var(--border-color-light);
+}
+
+a:hover {
+    color: var(--main-color);
+    text-shadow: var(--shadow-color-glow-main);
+}
+
+/* --- Header Section --- */
+.site-header {
+    position: relative;
+    background-image: url('../assets/images/imgPhongPage/backgrounduth.png');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding: 4rem 1rem;
+    overflow: hidden;
+    /* Áp dụng border và margin từ body hoặc định nghĩa riêng */
+    border-radius: 20px;
+    margin: 5px;
+    /* Animation ban đầu cho header */
+    animation: slideDown 1s ease-out forwards;
+}
+
+.header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+/* header-content: Đảm bảo avatar, h1, p xếp chồng và căn giữa */
+.header-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column; /* Luôn xếp chồng */
+    align-items: center;
+    justify-content: center; /* Luôn căn giữa dọc */
+    text-align: center;
+}
+
+/* Style cho nút điều khiển âm thanh */
+/* .audio-control {
+    position: absolute; 
+    top: 20px;
+    right: 20px;
+    z-index: 100; 
+    font-size: 1.8rem;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    text-shadow: 1px 1px 2px var(--border-color);
+}
+
+.audio-control:hover {
+    color: var(--cl1-color);
+    text-shadow: var(--shadow-color-glow-cl1);
+}
+.audio-control.active i {
+    color: var(--main-color);
+    text-shadow: var(--shadow-color-glow-main);
+} */
+
+/* Style cho thẻ bao ngoài avatar và icons (Dùng Flexbox để căn giữa nội dung bên trong) */
+.avatar-flex-wrapper {
+    display: flex; /* Flex container */
+    flex-direction: column; /* Avatar và icon container xếp chồng mặc định */
+    align-items: center;
+    position: relative; /* Quan trọng: Để social-icons-on-avatar định vị tuyệt đối theo wrapper này */
+    margin-bottom: 1.5rem;
+}
+
+/* Style khi wrapper có class 'show-icons' (do JS thêm) - chỉ trên desktop */
+@media (min-width: 992px) {
+    .avatar-flex-wrapper.show-icons {
+        box-shadow: var(--shadow-color-glow-main);
+        animation: subtleWobble 0.7s ease-in-out infinite; /* Thêm animation rung lắc khi menu hiển thị */
+    }
+}
+
+.profile-pic {
+    display: block; /* Đảm bảo block để img bên trong không ảnh hưởng */
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden; /* overflow: hidden cho ảnh */
+    /* Border và Shadow phong cách Pixel */
+    border: 5px solid var(--main-color);
+    box-shadow: var(--shadow-color-glow-cl2);
+    /* Animation ban đầu */
+    animation: fadeInScale 1.5s ease-out forwards,
+        floatBobbing 3s ease-in-out infinite alternate 1.5s;
+    cursor: pointer; /* Thêm transition cho màu shadow thay đổi mượt mà */
+    transition: box-shadow 0.3s ease-out;
+}
+
+/* Style khi wrapper có class 'show-icons' (do JS thêm) - chỉ trên desktop */
+@media (min-width: 992px) {
+    .avatar-flex-wrapper.show-icons .profile-pic {
+        box-shadow: var(--shadow-color-glow-main);
+        /* Animation: Tắt bobbing và thay bằng subtleWobble khi icons hiện */
+        animation-name: fadeInScale, subtleWobble; /* Sử dụng cả 2 animation */
+        animation-duration: 1.5s ease-out forwards, 0.7s ease-in-out infinite; /* Duration cho từng animation */
+        animation-delay: 0s, 1.5s; /* Delay cho từng animation (fadeInScale không cần delay, subtleWobble sau fadeIn) */
+    }
+}
+
+/* Style cho ảnh trong avatar */
+.profile-pic img {
+    display: block;
+    width: 200px;
+    height: 200px;
+    object-fit: contain; /* Đảm bảo toàn bộ ảnh hiển thị, không bị cắt */
+    image-rendering: pixelated; /* Giữ nguyên style pixel */
+    border-radius: 50%;
+    background-color: #6fd8e3;
+    transition: transform 0.3s ease;
+}
+
+/* Áp dụng hiệu ứng phóng to khi rê chuột vào div .profile-pic */
+.profile-pic:hover img {
+    transform: scale(1.1);
+}
+
+/* Style cho container icon mạng xã hội bên cạnh avatar */
+.social-icons-on-avatar {
+    position: absolute; /* Định vị tuyệt đối so với .avatar-flex-wrapper */
+    top: 50%; /* Đặt điểm neo ở giữa chiều cao của wrapper */
+    /* Vị trí ban đầu (ẩn): Bên phải của avatar, cách 20px */
+    /* Tính toán vị trí dựa trên kích thước avatar và căn giữa wrapper */
+    left: calc(50% + 100px + 20px); /* Từ tâm wrapper (50%) + nửa chiều rộng avatar (100px) + khoảng cách (20px) */
+    transform: translateY(-50%) translateX(-20px); /* Dịch lên 50% chiều cao của chính nó để căn giữa theo chiều dọc, và dịch sang trái 20px (bắt đầu ẩn đi) */
+    display: flex; /* Sử dụng Flexbox để sắp xếp các icon con */
+    flex-direction: column; /* Xếp theo chiều dọc */
+    gap: 0.8rem;
+    opacity: 0; /* Ban đầu ẩn đi */
+    pointer-events: none; /* Không bắt sự kiện chuột khi ẩn */
+    z-index: 10; /* Đảm bảo hiển thị trên các nội dung khác */
+
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out; /* Style cho container icon */
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.7); /* Nền mờ */
+    border: 1px solid var(--cl1-color);
+    padding: 0.5rem;
+}
+
+/* Style khi wrapper CÓ class 'show-icons' (do JS thêm) - chỉ trên desktop */
+@media (min-width: 992px) {
+    .avatar-flex-wrapper.show-icons .social-icons-on-avatar {
+        opacity: 1; /* Hiện container */
+        transform: translateY(-50%) translateX(0);
+        pointer-events: auto; /* Cho phép tương tác chuột */
+    }
+}
+
+/* Style cho các icon con bên trong container social-icons-on-avatar */
+.social-icons-on-avatar .social-icon {
+    font-size: 2.2rem;
+    color: var(--cl2-color);
+    text-shadow: 2px 2px 4px var(--border-color);
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+    display: block;
+    cursor: pointer; /* Đảm bảo cursor pointer */
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    transition: color 0.2s ease, text-shadow 0.2s ease, transform 0.2s ease, animation 0.7s ease-in-out;
+}
+
+/* Style cho icon <i> bên trong link social-icons-on-avatar */
+.social-icons-on-avatar .social-icon i {
+    color: inherit;
+    transition: transform 0.2s ease;
+    margin-right: 0;
+}
+
+/* Style khi hover vào từng icon con (áp dụng cho thẻ a) */
+.social-icons-on-avatar .social-icon:hover {
+    color: var(--cl1-color);
+    text-shadow: var(--shadow-color-glow-cl1);
+    animation: subtleWobble 0.7s ease-in-out infinite;
+}
+
+/* Style khi hover vào từng icon con (áp dụng cho thẻ i) */
+.social-icons-on-avatar .social-icon:hover i {
+    transform: scale(1.1);
+}
+
+/* h1 và p nằm dưới avatar-flex-wrapper, kế thừa căn giữa từ header-content */
+.site-header h1 {
+    font-size: 2.9rem;
+    margin-bottom: 0.5rem;
+    font-family: 'Press Start 2P', cursive;
+    color: var(--main-color);
+    text-shadow: 2px 2px 4px var(--border-color);
+    animation: fadeInUp 1.5s ease-out 0.7s forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.site-header p {
+    font-size: 1.3rem;
+    opacity: 0.8;
+    color: var(--text-color);
+    text-shadow: 1px 1px 2px var(--border-color);
+    animation: fadeInUp 1.5s ease-out 0.9s forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* --- keyframes cho animation --- */
+@keyframes slideDown {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        /* Trạng thái cuối cùng phải là hiển thị và kích thước ban đầu */
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Keyframes for game-like scroll animation (bounceIn) */
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) translateY(100px);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1) translateY(-20px);
+    }
+    70% {
+        transform: scale(0.9) translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Keyframes for subtle wobble animation on hover/activate */
+@keyframes subtleWobble {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0);
+    }
+    25% {
+        transform: translate(-0.5px, -0.2px) rotate(-0.2deg);
+    }
+    50% {
+        transform: translate(0.5px, 0.2px) rotate(0.2deg);
+    }
+    75% {
+        transform: translate(-0.5px, 0.2px) rotate(-0.2deg);
+    }
+}
+
+/* Keyframes for floating/bobbing animation */
+@keyframes floatBobbing {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* --- Container for background effects (Smoke/Sparks) --- */
+.background-effects {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* --- Styles and Animations for White Smoke (Smoke) --- */
+/* Only displayed on desktop (>= 992px) - logic in JS */
+.smoke-puff {
+    position: absolute;
+    bottom: 0;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    filter: blur(6px);
+}
+
+/* Keyframes for smoke floating up animation */
+@keyframes floatUpSmoke {
+    0% {
+        transform: translateY(0) scale(0.8);
+        opacity: 0.4;
+    }
+    50% {
+        transform: translateY(-50vh) scale(1.5);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-100vh) scale(2);
+        opacity: 0;
+    }
+}
+
+/* --- Styles and Animations for Sparks --- */
+/* Only displayed on desktop (>= 992px) - logic in JS */
+.spark {
+    position: absolute;
+    bottom: 15px;
+    width: 4px;
+    height: 4px;
+    background-color: #ffb000;
+    border-radius: 50%;
+    box-shadow: 0 0 6px #ffb000;
+}
+
+/* Keyframes for sparks flying up animation */
+@keyframes floatUpSpark {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-10vh) scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* --- Navigation Bar --- */
+.site-nav {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    margin: 1rem auto;
+    flex-wrap: wrap;
+    max-width: fit-content;
+
+    /* Style Pixel Art for Navbar */
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 2px solid var(--cl2-color);
+    box-shadow: var(--shadow-color-glow-cl2);
+    border-radius: 8px;
+    gap: 1rem;
+}
+
+.site-nav a {
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    box-shadow: none;
+    font-weight: 600;
+    font-size: 1rem;
+
+    /* Style Link Nav */
+    color: var(--cl1-color);
+    background: none;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+    text-shadow: 1px 1px 2px var(--border-color-light);
+    cursor: pointer;
+}
+
+.site-nav a:hover {
+    color: var(--text-color);
+    background-color: var(--main-color);
+    box-shadow: 0 0 10px var(--main-color);
+    border-color: var(--main-color);
+    animation: subtleWobble 0.5s ease-in-out infinite;
+}
+
+/* Main Content Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* --- Styling for all sections --- */
+.section {
+    margin-bottom: 2.5rem;
+    padding: 2rem;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid var(--border-color);
+    box-shadow: var(--shadow-color-glow-main);
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    animation: none;
+}
+
+/* Class added by JS when section is visible */
+.section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Apply wobble animation on section hover */
+.section:hover {
+    animation: subtleWobble 0.7s ease-in-out infinite;
+    cursor: pointer;
+}
+
+.section h2 {
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 1.8rem;
+    border-bottom: 2px solid var(--border-color-light);
+
+    font-family: 'Press Start 2P', cursive;
+    color: var(--main-color);
+    text-shadow: 2px 2px 4px var(--border-color);
+}
+
+/* Style for icon in section titles */
+.section h2 .section-icon {
+    margin-right: 10px;
+    color: var(--main-color);
+    position: relative;
+    top: -2px;
+    text-shadow: none;
+}
+
+/* --- Styles for TEXT content in sections (p, li) --- */
+/* Base styles for paragraphs and list items within sections */
+.section p,
+.section ul li {
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+    color: var(--text-color);
+    text-shadow: 1px 1px 2px var(--border-color-light);
+    line-height: 1.6;
+}
+
+/* Adjustments for specific sections/elements */
+#about p {
+    margin-bottom: 0.8rem;
+}
+
+#about p strong {
+    color: white;
+    text-shadow: 1px 1px 2px var(--cl2-color);
+}
+
+#career p {
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+}
+
+#career p:last-child {
+    margin-bottom: 0;
+}
+
+#career p strong {
+    color: white;
+    text-shadow: 1px 1px 2px var(--cl2-color);
+}
+
+/* --- Content inside each Section (using Flexbox/Grid) --- */
+/* About Section */
+.about-content {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.about-photo {
+    flex-shrink: 0;
+}
+
+.about-text {
+    flex-grow: 1;
+}
+
+/* --- Contact Section --- */
+/* Styles for the Contact section */
+.contact-info p {
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+    color: var(--text-color);
+    text-shadow: 1px 1px 2px var(--border-color-light);
+}
+
+.contact-info p i {
+    margin-right: 10px;
+    color: var(--cl1-color);
+    position: relative;
+    top: 2px;
+    text-shadow: none;
+}
+
+.contact-info a {
+    color: var(--cl1-color);
+    text-shadow: 1px 1px 2px var(--border-color-light);
+    cursor: pointer;
+}
+
+.contact-info a:hover {
+    color: var(--main-color);
+    text-decoration: underline;
+    text-shadow: var(--shadow-color-glow-main);
+    animation: subtleWobble 0.5s ease-in-out infinite;
+}
+
+.social-links {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* This general .social-icon style applies to icons in both Contact section and avatar icons */
+.social-icon {
+    font-size: 2rem;
+    color: var(--cl2-color);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    text-shadow: 2px 2px 4px var(--border-color);
+    cursor: pointer;
+    display: inline-block;
+}
+
+/* Specific size for icons in Contact Section (overrides if needed) */
+.contact-info .social-icon {
+    font-size: 2rem;
+}
+
+.social-icon:hover {
+    color: var(--cl1-color);
+    text-shadow: var(--shadow-color-glow-cl1);
+    animation: subtleWobble 0.5s ease-in-out infinite;
+}
+
+.social-icon i {
+    position: relative;
+    top: 2px;
+    text-shadow: none;
+    color: inherit;
+    display: block;
+    transform: scale(1);
+    transition: transform 0.3s ease;
+}
+
+/* Scale up icon on hover */
+.social-icon:hover i {
+    transform: scale(1.4);
+}
+
+.fa-github:hover {
+    color: #e21548;
+}
+
+.fa-facebook-f:hover {
+    color: #1877F2;
+}
+
+.fa-instagram:hover {
+    color: #E4005F;
+}
+
+.note {
+    margin-top: 1.5rem;
+    font-style: italic;
+    color: #aaa;
+    text-align: center;
+    text-shadow: 1px 1px 2px var(--border-color);
+}
+
+/* --- Skills Section --- */
+.skills-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.skill-category {
+    padding: 0.8rem;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.skill-category:hover {
+    box-shadow: var(--shadow-color-glow-main);
+    animation: subtleWobble 0.7s ease-in-out infinite;
+}
+
+.skill-category h3 {
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.4rem;
+    font-size: 1.2rem;
+    border-bottom: 1px dashed var(--cl1-color);
+
+    font-family: 'Press Start 2P', cursive;
+    color: var(--main-color);
+    text-shadow: 1px 1px 2px var(--border-color);
+}
+
+.skill-category ul {
+    list-style: none;
+    padding: 0;
+}
+
+.skill-category li {
+    margin-bottom: 0.5rem;
+    padding-left: 1.2rem;
+    position: relative; /* For custom bullet positioning */
+    color: var(--text-color);
+    text-shadow: 1px 1px 2px var(--border-color-light);
+    line-height: 1.5; /* Increase line height for list items */
+}
+
+/* Custom bullet point using ::before */
+.skill-category li::before {
+    content: "\f00c"; /* Unicode for check icon (Font Awesome) */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    color: var(--cl1-color);
+    position: absolute;
+    left: 0;
+    top: 5px;
+    font-size: 0.9rem;
+    text-shadow: none;
+}
+
+/* --- Hobbies Section --- */
+/* Container cho danh sách sở thích (ul.hobbies-list) - KHÔNG LÀ FLEX CONTAINER CHÍNH NỮA */
+.hobbies-list {
+    list-style: none; /* Bỏ style mặc định */
+    padding: 0;
+}
+
+/* BỔ SUNG: Container cho từng hàng sở thích (div.hobbies-row) - ĐÂY LÀ FLEX CONTAINER CHỨA LI */
+.hobbies-row {
+    display: flex; /* Khai báo là flex container */
+    flex-direction: row; /* Xếp các mục (li) theo hàng ngang */
+    flex-wrap: wrap; /* Cho phép các mục li tự động xuống dòng khi hết chỗ */
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: flex-start; /* Căn các mục li theo đỉnh */
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.hobbies-row:last-child {
+    margin-bottom: 0;
+}
+
+/* Individual hobby item (li) */
+/* Styles áp dụng cho TẤT CẢ các li, là item của div.hobbies-row */
+.hobbies-list li {
+    /* Flex item within div.hobbies-row, and flex container for its own content */
+    display: flex;
+    flex-direction: column; /* Stack icon/title, description, details vertically */
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    width: 280px;
+    flex-grow: 0; /* Ngăn các mục mở rộng */
+    flex-shrink: 1; /* Cho phép các mục co lại một chút nếu cần */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add transition for hover effects */
+    cursor: pointer;
+    color: var(--text-color);
+    text-shadow: 1px 1px 2px var(--border-color-light);
+    padding-left: 1rem;
+    position: static; /* No position relative needed here */
+    margin-bottom: 0;
+}
+
+/* Style RIÊNG cho mục sở thích game */
+/* Rule này chỉ áp dụng cho li CÓ class hobby-game-item, nằm trong div.hobbies-row */
+.hobbies-list li.hobby-game-item {
+    width: 100%;
+    flex-shrink: 0; /* Ngăn mục này co lại dưới 100% trên desktop, đảm bảo nó luôn cố gắng chiếm hết dòng */
+}
+
+/* Container for icon and title within a hobby item */
+.hobbies-list li .hobby-header {
+    display: flex; /* Flex container for icon and span */
+    align-items: center;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+/* Style for icon in hobby-header */
+.hobbies-list li .hobby-header i {
+    margin-right: 8px;
+    color: var(--cl2-color);
+    position: relative;
+    top: 0px;
+    text-shadow: none;
+    flex-shrink: 0; /* Prevent icon from shrinking */
+    font-size: 1.4rem; /* Adjust icon size if needed */
+}
+
+/* Style for the paragraph containing the hobby description */
+.hobbies-list li .hobby-description {
+    display: block; /* Ensure it's a block element */
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    font-size: 1.4rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    font-style: normal;
+    line-height: 1.4;
+}
+
+/* Style riêng cho phần chi tiết game */
+.hobbies-list li .game-hobby-details {
+    margin-top: 0.5rem;
+    padding-top: 0.8rem;
+    border-top: 1px dashed var(--cl1-color);
+}
+
+/* Style for paragraphs within game hobby details */
+.hobbies-list li .game-hobby-details p {
+    font-size: 1.4rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+}
+
+.hobbies-list li .game-hobby-details p strong {
+    color: white;
+    text-shadow: 1px 1px 2px var(--cl2-color);
+}
+
+/* Style cho image wrapper trong mục sở thích game để chứa nhiều ảnh và có scroll */
+.hobbies-list li .hobby-image-wrapper {
+    display: flex; /* CHUYỂN THÀNH FLEX CONTAINER */
+    flex-direction: row; /* Xếp ảnh theo hàng ngang */
+    flex-wrap: nowrap; /* Ngăn ảnh tự động xuống dòng */
+    gap: 0.6rem;
+    align-items: center;
+    justify-content: center;
+    max-height: 160px;
+    overflow-y: hidden; /* Ẩn cuộn dọc nếu ảnh vượt quá max-height */
+    overflow-x: auto; /* CHO PHÉP CUỘN NGANG */
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    margin-top: 0.8rem;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color-light);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: var(--main-color) var(--second-bg-color); /* Thumb và Track color */
+}
+
+/* Style scrollbar (Webkit browsers) */
+.hobbies-list li .hobby-image-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.hobbies-list li .hobby-image-wrapper::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.hobbies-list li .hobby-image-wrapper::-webkit-scrollbar-thumb {
+    background-color: var(--main-color);
+    border-radius: 4px;
+    border: 1px solid var(--text-color);
+}
+
+/* Style cho ảnh trong image wrapper sở thích game (Nhiều ảnh) */
+.hobbies-list li .hobby-image-wrapper img {
+    display: block;
+    height: 140px; 
+    width: auto;
+    object-fit: cover; /* Giữ nguyên cover ở đây vì em muốn ảnh game lấp đầy chiều cao */
+    image-rendering: pixelated;
+
+    flex-shrink: 0; /* QUAN TRỌNG: Ngăn ảnh bị co lại trong flex container, giúp cuộn ngang */
+    border-radius: 2px;
+    border: 1px solid var(--border-color);
+    box-shadow: 1px 1px 0 var(--border-color-light);
+
+    transition: transform 0.3s ease; /* Chỉ transition cho transform */
+    cursor: pointer; 
+}
+
+/* Hiệu ứng phóng to khi rê chuột trực tiếp vào ảnh sở thích game */
+.hobbies-list li .hobby-image-wrapper img:hover {
+    transform: scale(1.1);
+}
+
+
+/* --- Projects Section --- */
+/* Styles for the project grid */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* Styles for each project card */
+.project-card {
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--border-color);
+    box-shadow: var(--shadow-color-glow-cl1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-color-glow-cl2);
+    animation: subtleWobble 0.5s ease-in-out infinite;
+}
+
+/* Styles for project image wrapper */
+.project-image-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 75%; 
+    overflow: hidden;
+    background-color: var(--second-bg-color);
+}
+
+/* Styles for project image */
+.project-img {
+    padding: 25px;
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%; 
+    object-fit: contain;
+    image-rendering: pixelated;
+    transition: transform 0.3s ease;
+    cursor: pointer; /* Thêm con trỏ pointer */
+}
+
+/* Hiệu ứng phóng to khi rê chuột trực tiếp vào ảnh dự án */
+.project-image-wrapper .project-img:hover {
+    transform: scale(1.2);
+}
+
+/* Styles for project title */
+.project-card h3 {
+    margin: 1rem 1rem 0.5rem 1rem;
+    font-size: 1.4rem;
+    font-family: 'Press Start 2P', cursive;
+    color: var(--main-color);
+    text-shadow: 2px 2px 4px var(--border-color);
+}
+
+/* Styles for project description paragraphs (applies to all p in project-card except the last one) */
+.project-card p {
+    margin: 0 1rem 0.8rem 1rem;
+    flex-grow: 1; /* Allow main description paragraphs to take up remaining space */
+    color: var(--text-color);
+    text-shadow: 1px 1px 2px var(--border-color-light);
+}
+
+/* Specific style for the technologies paragraph (second to last p) */
+#projects .project-card p:nth-last-child(2) {
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: white;
+    font-size: 1.4rem;
+    text-shadow: 1px 1px 2px var(--cl1-color);
+}
+
+/* Styles for project links container */
+.project-links {
+    margin: 0 1rem 1rem 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--cl1-color);
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Styles for project link buttons */
+.project-links .btn-link {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    text-align: center;
+    /* Pixel Art Button Style */
+    background-color: var(--main-color);
+    color: var(--text-color);
+    border: 2px solid var(--border-color);
+    box-shadow: 2px 2px 0 var(--border-color);
+    transition: all 0.1s ease;
+    cursor: pointer;
+}
+
+.project-links .btn-link:hover {
+    background-color: var(--cl1-color);
+    color: var(--border-color);
+    box-shadow: 0px 0px 0 var(--border-color);
+    transform: translate(2px, 2px);
+    animation: subtleWobble 0.5s ease-in-out infinite;
+}
+
+/* Styles for icon in project link buttons */
+.project-links .btn-link i {
+    margin-right: 5px;
+    text-shadow: none;
+    color: inherit;
+}
+
+/* Styles for small note below projects */
+.project-card .project-note {
+    font-size: 0.9rem;
+    color: #aaa;
+    margin: 0 1rem 1rem 1rem;
+    font-style: italic;
+    margin-bottom: 1rem !important;
+    padding: 0;
+    text-shadow: 1px 1px 2px var(--border-color);
+}
+
+/* --- Awards & Certificates Section --- */
+.awards-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.awards-list li {
+    margin-bottom: 0.8rem;
+    padding-left: 1.5rem;
+    position: relative; /* For custom bullet positioning */
+    color: var(--text-color);
+    text-shadow: 1px 1px 2px var(--border-color-light);
+    line-height: 1.5; /* Increase line height */
+}
+
+/* Custom bullet point for awards using ::before */
+.awards-list li::before {
+    content: "\f0a3"; /* Unicode for certificate icon (Font Awesome) */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    color: var(--cl2-color);
+    position: absolute;
+    left: 0;
+    top: 5px;
+    font-size: 1.4rem;
+    text-shadow: none;
+}
+
+/* Style for paragraph "Hiện tại chưa có..." */
+.awards-list p {
+    font-style: italic;
+    color: #aaa;
+    margin-top: 1rem;
+    font-size: 1.4rem;
+    text-shadow: 1px 1px 2px var(--border-color);
+}
+
+/* --- Footer Section --- */
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.9rem;
+    margin-top: 3rem;
+    background-color: var(--second-bg-color);
+    color: var(--text-color);
+    text-shadow: 1px 1px 2px var(--border-color);
+    border-top: 2px solid var(--border-color-light);
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 20px;
+}
+
+/* --- Responsive Design --- */
+/* Responsive for screens >= 992px (desktop) */
+@media (min-width: 992px) {
+    /* header-content: Keep stacked */
+    .header-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    /* Adjust avatar-flex-wrapper on desktop */
+    .avatar-flex-wrapper {
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        margin-bottom: 1.5rem;
+        padding-right: 80px; /* Space for hover icons */
+    }
+
+    .profile-pic {
+        margin: 0 auto;
+    }
+
+    /* Adjust social-icons-on-avatar styles on desktop */
+    .social-icons-on-avatar {
+        position: absolute;
+        top: 50%;
+        left: calc(50% + 100px + 20px); /* Position right of avatar + gap */
+        transform: translateY(-50%) translateX(-20px); /* Initial hidden state */
+        flex-direction: column;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+
+        /* Keep container style */
+        border-radius: 10px;
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 1px solid var(--cl1-color);
+        padding: 0.5rem;
+    }
+
+    /* Icon size inside social-icons-on-avatar on desktop */
+    .social-icons-on-avatar .social-icon {
+        font-size: 2.2rem;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .site-header h1,
+    .site-header p {
+        text-align: center;
+    }
+
+    /* Styles when wrapper has 'show-icons' class (added by JS) on desktop */
+    .avatar-flex-wrapper.show-icons {
+        box-shadow: var(--shadow-color-glow-main);
+        animation: subtleWobble 0.7s ease-in-out infinite;
+    }
+
+    .avatar-flex-wrapper.show-icons .profile-pic {
+        box-shadow: var(--shadow-color-glow-main);
+        animation-name: fadeInScale, subtleWobble;
+        animation-duration: 1.5s ease-out forwards, 0.7s ease-in-out infinite;
+        animation-delay: 0s, 1.5s;
+    }
+
+    .avatar-flex-wrapper.show-icons .social-icons-on-avatar {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+        pointer-events: auto;
+    }
+
+    /* Disable wobble animation on individual icon hover when menu is open on desktop */
+    .avatar-flex-wrapper.show-icons .social-icons-on-avatar .social-icon:hover {
+        animation: none;
+    }
+
+    /* Hover style for each hobby item (li) on desktop */
+    .hobbies-list li:hover {
+        box-shadow: var(--shadow-color-glow-main);
+        animation: subtleWobble 0.7s ease-in-out infinite; 
+        cursor: pointer;
+    }
+
+    /* Style scrollbar (Webkit browsers) trên desktop hover */
+    .hobbies-list li .hobby-image-wrapper::-webkit-scrollbar-thumb:hover {
+        background-color: var(--cl1-color); 
+    }
+
+}
+
+/* Responsive for screens <= 991px (tablet and mobile) */
+@media (max-width: 991px) {
+    .site-header {
+        padding: 3rem 1rem;
+        margin: 5px;
+        border-radius: 15px;
+    }
+
+    /* Remove audio-control styles for mobile absolute positioning */
+    .audio-control {
+        position: static;
+        margin: 10px auto 0;
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .audio-control i {
+        margin: 0;
+    }
+
+    /* header-content: Keep stacked */
+    .header-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0;
+    }
+
+    .site-header h1 {
+        font-size: 2rem;
+    }
+
+    .site-header p {
+        font-size: 1rem;
+    }
+
+    .site-nav {
+        display: flex;
+        justify-content: center;
+        padding: 1rem;
+        margin: 1rem auto;
+        flex-wrap: wrap;
+        max-width: fit-content;
+
+        /* Pixel Art Navbar Style */
+        background-color: rgba(0, 0, 0, 0.8);
+        border: 2px solid var(--cl2-color);
+        box-shadow: var(--shadow-color-glow-cl2);
+        border-radius: 8px;
+        gap: 0.5rem;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .site-nav a:hover {
+        animation: none !important;
+        transform: none !important;
+    }
+
+    .container {
+        padding: 0 0.8rem;
+    }
+
+    .section {
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        border-radius: 8px;
+    }
+
+    /* Disable wobble animation on section hover on mobile */
+    .section:hover {
+        animation: none !important;
+        cursor: default;
+    }
+
+    .section h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .section h2 .section-icon {
+        top: 0px;
+    }
+
+    /* Styles for TEXT content in sections (p, li) on mobile */
+    .section p,
+    .section ul li {
+        font-size: 1rem;
+        margin-bottom: 0.6rem;
+    }
+
+    /* About Section */
+    .about-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    /* Responsive adjustments for avatar-flex-wrapper on mobile */
+    .avatar-flex-wrapper {
+        flex-direction: column;
+        align-items: center;
+        position: static; /* Remove absolute positioning */
+        margin: 0 auto 1.5rem auto;
+        padding-right: 0; /* Remove desktop padding */
+        box-shadow: none !important; /* Disable JS added shadow */
+        animation: none !important; /* Disable JS added wobble animation */
+    }
+
+    /* Responsive adjustments for profile-pic inside wrapper on mobile */
+    .profile-pic {
+        margin: 0 auto 1rem auto;
+        animation: fadeInScale 1.5s ease-out forwards, floatBobbing 3s ease-in-out infinite alternate 1.5s;
+        box-shadow: var(--shadow-color-glow-cl2);
+    }
+
+    /* Disable 'show-icons' styles on mobile */
+    .avatar-flex-wrapper.show-icons .profile-pic {
+        animation: fadeInScale 1.5s ease-out forwards, floatBobbing 3s ease-in-out infinite alternate 1.5s !important;
+        box-shadow: var(--shadow-color-glow-cl2) !important;
+    }
+
+    /* Responsive adjustments for social-icons-on-avatar on mobile */
+    /* Always display below avatar */
+    .social-icons-on-avatar {
+        position: static; /* Remove absolute positioning */
+        left: auto;
+        top: auto;
+        margin-top: 0;
+        opacity: 1 !important; /* Always visible on mobile */
+        pointer-events: auto !important; /* Always interactive on mobile */
+        transform: none !important;
+        transition: none !important;
+        display: flex;
+        flex-direction: row; /* Arrange icons horizontally */
+        justify-content: center;
+        gap: 1rem;
+        width: 100%;
+        border-radius: 8px;
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 1px solid var(--cl1-color);
+        padding: 0.5rem;
+    }
+
+    /* Disable 'show-icons' styles for social icons on mobile */
+    .avatar-flex-wrapper.show-icons .social-icons-on-avatar {
+        opacity: 1 !important;
+        transform: none !important;
+        pointer-events: auto !important;
+    }
+
+    /* Ensure icons within social-icons-on-avatar are styled correctly on mobile */
+    .social-icons-on-avatar .social-icon {
+        font-size: 1.8rem;
+        animation: none !important; /* Disable wobble animation */
+        width: auto;
+        height: auto;
+        line-height: normal;
+    }
+
+    .social-icons-on-avatar .social-icon:hover {
+        animation: none !important;
+        text-shadow: var(--shadow-color-glow-cl1); /* Keep hover shadow */
+    }
+
+    /* Contact Section mobile styles */
+    .contact-info p {
+        text-align: center;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    /* Adjust scale effect on icon hover on mobile */
+    .social-icon:hover i {
+        transform: scale(1.05); /* Smaller scale effect on mobile */
+    }
+
+    .note {
+        font-size: 0.9rem;
+    }
+
+    /* Career Section */
+    #career p {
+        font-size: 1rem;
+    }
+
+    /* Skills Section - Grid will stack due to minmax */
+    .skill-category {
+        animation: none !important;
+        cursor: default;
+    }
+
+    .skill-category:hover {
+        box-shadow: var(--shadow-color-glow-main);
+    }
+
+    .skill-category h3 {
+        font-size: 1.1rem;
+    }
+
+    .skill-category li {
+        font-size: 1rem;
+    }
+
+    .skill-category li::before {
+        top: 3px;
+    }
+
+    /* Projects Section - Grid will stack due to minmax */
+    .project-card h3 {
+        font-size: 1.2rem;
+    }
+
+    .project-card p {
+        font-size: 0.95rem;
+    }
+
+    #projects .project-card p:nth-last-child(2) {
+        font-size: 0.95rem;
+    }
+
+    .project-links {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .project-links .btn-link {
+        text-align: center;
+    }
+
+    .project-links .btn-link:hover {
+        animation: none !important;
+        transform: translate(2px, 2px) !important;
+        box-shadow: 0px 0px 0 var(--border-color);
+    }
+
+    /* Hobbies Section Mobile */
+    /* Cấu hình Flexbox cho các hàng sở thích (div.hobbies-row) trên mobile */
+    .hobbies-row {
+        gap: 1rem;
+        flex-direction: row; /* Giữ là row, để wrap */
+        flex-wrap: wrap; /* Cho phép wrap */
+        justify-content: center;
+        align-items: flex-start; /* Căn theo đỉnh */
+        margin-bottom: 1rem; 
+    }
+
+    /* Kích thước li trên mobile (áp dụng cho TẤT CẢ li) */
+    .hobbies-list li {
+        width: 90%;
+        max-width: 300px;
+        padding: 0.8rem;
+        flex-shrink: 1; /* Cho phép co lại trên mobile */
+    }
+
+    /* Bỏ animation hover trên mobile */
+    .hobbies-list li:hover {
+        animation: none !important;
+        cursor: default;
+        box-shadow: var(--shadow-color-glow-main);
+    }
+
+    /* Cụ thể cho mục game trên mobile: tuân theo kích thước chung của mobile */
+    /* Rule này override style width: 100% từ bên ngoài media query */
+    .hobbies-list li.hobby-game-item {
+        width: 90% !important; /* Override width: 100% từ rule chung */
+        max-width: 300px !important; /* Ensure it respects mobile max-width */
+        flex-shrink: 1 !important; /* Bỏ các style riêng nếu không cần trên mobile */
+    }
+
+    /* Bỏ margin dưới cho hàng cuối cùng trên mobile */
+    .hobbies-row:last-child {
+        margin-bottom: 0;
+    }
+
+
+    .hobbies-list li .hobby-header {
+        margin-bottom: 0.4rem;
+    }
+
+    .hobbies-list li .hobby-header span {
+        font-size: 1rem;
+    }
+
+    .hobbies-list li .hobby-description {
+        font-size: 0.9rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .hobbies-list li .game-hobby-details {
+        margin-top: 0.4rem;
+        padding-top: 0.6rem;
+    }
+
+    .hobbies-list li .game-hobby-details p {
+        font-size: 0.85rem;
+        margin-bottom: 0.6rem;
+    }
+
+    /* Style cho image wrapper trên mobile */
+    .hobbies-list li .hobby-image-wrapper {
+        max-height: 100px;
+        margin-top: 0.6rem;
+        padding: 0.3rem;
+        gap: 0.4rem;
+    }
+
+    /* Style cho ảnh trong wrapper trên mobile */
+    .hobbies-list li .hobby-image-wrapper img {
+        height: 80px;
+        width: auto;
+        flex-shrink: 0; /* Giữ flex-shrink 0 để có cuộn ngang */
+    }
+
+    /* Awards Section */
+    .awards-list li {
+        font-size: 1rem;
+    }
+
+    .awards-list li::before {
+        top: 3px;
+    }
+
+    .awards-list p {
+        font-size: 0.9rem;
+    }
+
+    /* Footer */
+    footer {
+        padding: 1rem;
+        font-size: 0.8rem;
+        margin-left: 5px;
+        margin-right: 5px;
+        border-radius: 10px;
+    }
+}
+
+/* Responsive for very small screens */
+@media (max-width: 480px) {
+    .profile-pic img {
+        width: 120px;
+        height: 120px;
+        object-fit: contain;
+    }
+
+    /* ---HIỆU ỨNG PHÓNG TO ẢNH AVATAR KHI HOVER TRÊN MÀN HÌNH RẤT NHỎ (< 480px) --- */
+    /* Áp dụng hiệu ứng phóng to khi rê chuột vào div .profile-pic (giữ nguyên như code ban đầu) */
+    .profile-pic:hover img {
+        transform: scale(1.05);
+    }
+
+
+    .site-header h1 {
+        font-size: 1.6rem;
+    }
+
+    .site-header p {
+        font-size: 0.85rem;
+    }
+
+    .site-nav a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    .section {
+        padding: 1rem;
+    }
+
+    .section h2 {
+        font-size: 1.2rem;
+    }
+
+    .skill-category h3 {
+        font-size: 1rem;
+    }
+
+    .skill-category li,
+    /* Bao gồm hobby-game-item trong rule này để đảm bảo font-size nhỏ */
+    .hobbies-list li,
+    .hobbies-list li.hobby-game-item,
+    /* Áp dụng font-size nhỏ cho li game trên màn hình rất nhỏ */
+    .awards-list li,
+    .contact-info p {
+        font-size: 0.9rem;
+    }
+
+    .skill-category li::before,
+    .awards-list li::before,
+    .contact-info p i {
+        top: 2px;
+        font-size: 0.8rem;
+    }
+
+    /* Adjust icon spacing and size on very small screens */
+    .social-icons-on-avatar {
+        gap: 0.6rem;
+    }
+
+    .social-icons-on-avatar .social-icon {
+        font-size: 1.5rem;
+    }
+
+    .project-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .project-links {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .project-links .btn-link {
+        text-align: center;
+    }
+
+    .social-icon {
+        font-size: 1.6rem;
+    }
+
+    .hobbies-list li .hobby-image-wrapper {
+        max-height: 80px;
+        margin-top: 0.5rem;
+        padding: 0.2rem;
+        gap: 0.3rem;
+    }
+
+    .hobbies-list li .hobby-image-wrapper img {
+        height: 70px;
+        width: auto;
+        flex-shrink: 0; /* Giữ flex-shrink 0 để có cuộn ngang */
+    }
+
+    /* Giảm độ phóng to ảnh dự án khi hover trên màn hình rất nhỏ */
+    .project-image-wrapper .project-img:hover {
+        transform: scale(1.05);
+    }
+
+    /* Giảm độ phóng to ảnh game khi hover trên màn hình rất nhỏ */
+    .hobbies-list li .hobby-image-wrapper img:hover {
+         transform: scale(1.05);
+    }
+
+
+    footer {
+        padding: 0.8rem;
+        font-size: 0.7rem;
+        margin-left: 5px;
+        margin-right: 5px;
+        border-radius: 10px;
+    }
+}
